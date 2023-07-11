@@ -3,6 +3,17 @@ import { useState } from 'react';
 import Form from './components/Form';
 import Titulo from './components/Titulo';
 
+const formDefaultValues = {
+  nomeDoServiço: '',
+  login: '',
+  senha: '',
+  URL: '',
+};
+
+type FormDefaultValues = {
+
+};
+
 function App() {
   const [renderForm, setRenderForm] = useState(false);
   function handleRenderForm() {

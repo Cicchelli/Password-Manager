@@ -1,6 +1,13 @@
 import React from 'react';
 
-function Form() {
+type FormProps = {
+  handleClearForm: () => void
+};
+
+function Form(props:FormProps) {
+  const {
+    handleClearForm,
+  } = props;
   return (
     <form>
       <label>
@@ -20,7 +27,7 @@ function Form() {
         <input type="text" />
       </label>
       <button>Cadastrar</button>
-      <button>Cancelar</button>
+      <button onClick={ handleClearForm }>Cancelar</button>
     </form>
   );
 }

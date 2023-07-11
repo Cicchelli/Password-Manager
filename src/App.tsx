@@ -3,15 +3,11 @@ import { useState } from 'react';
 import Form from './components/Form';
 import Titulo from './components/Titulo';
 
-const formDefaultValues = {
-  nomeDoServiço: '',
-  login: '',
-  senha: '',
-  URL: '',
-};
-
 type FormDefaultValues = {
-
+  nomeDoServiço: string,
+  login: string,
+  senha: string,
+  URL: string,
 };
 
 function App() {

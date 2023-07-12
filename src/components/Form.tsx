@@ -18,6 +18,8 @@ function Form(props:FormProps) {
   const [btnState, setbtnState] = useState(true);
   const [estadoInicial, setEstadoInicial] = useState(formDefaultValues);
   const { nomeDoServico, login, senha, URL } = estadoInicial;
+  const validPass = 'valid-password-check';
+  const invalidPass = 'invalid-password-check';
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) {
@@ -41,48 +43,75 @@ function Form(props:FormProps) {
     }
   }
   return (
-    <form onKeyUpCapture={ passwordStatus }>
-      <label>
-        Nome do serviço
-        <input
-          type="text"
-          name="nomeDoServico"
-          onChange={ handleChange }
-          value={ nomeDoServico }
-          required
-        />
-      </label>
-      <label>
-        Login
-        <input
-          type="text"
-          name="login"
-          onChange={ handleChange }
-          value={ login }
-          required
-        />
-      </label>
-      <label>
-        Senha
-        <input
-          type="password"
-          name="senha"
-          onChange={ handleChange }
-          value={ senha }
-        />
-      </label>
-      <label>
-        URL
-        <input
-          type="text"
-          name="URL"
-          onChange={ handleChange }
-          value={ URL }
-        />
-      </label>
-      <button disabled={ btnState }>Cadastrar</button>
-      <button onClick={ handleClearForm }>Cancelar</button>
-    </form>
+    <div>
+      <form onKeyUpCapture={ passwordStatus }>
+        <label>
+          Nome do serviço
+          <input
+            type="text"
+            name="nomeDoServico"
+            onChange={ handleChange }
+            value={ nomeDoServico }
+            required
+          />
+        </label>
+        <label>
+          Login
+          <input
+            type="text"
+            name="login"
+            onChange={ handleChange }
+            value={ login }
+            required
+          />
+        </label>
+        <label>
+          Senha
+          <input
+            type="password"
+            name="senha"
+            onChange={ handleChange }
+            value={ senha }
+          />
+        </label>
+        <label>
+          URL
+          <input
+            type="text"
+            name="URL"
+            onChange={ handleChange }
+            value={ URL }
+          />
+        </label>
+        <button disabled={ btnState }>Cadastrar</button>
+        <button onClick={ handleClearForm }>Cancelar</button>
+      </form>
+      <p
+        className={ senha.length >= 8 && senha.length <= 16
+          ? validPass : invalidPass }
+      >
+        Possuir 8 ou mais caracteres
+      </p>
+      <p
+        className={ senha.length <= 16
+          ? validPass : invalidPass }
+      >
+        Possuir até 16 caracteres
+      </p>
+      <p
+        className={ /\d/.test(senha)
+          ? validPass : invalidPass }
+      >
+        Possuir letras e números
+
+      </p>
+      <p
+        className={ /\W|_/.test(senha)
+          ? validPass : invalidPass }
+      >
+        Possuir algum caractere especial
+      </p>
+    </div>
   );
 }
 

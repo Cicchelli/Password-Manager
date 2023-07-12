@@ -1,39 +1,30 @@
 import React, { useState } from 'react';
+import { TargetType, FormDefaultValuesType } from './Types';
 
 type FormProps = {
-  handleClearForm: () => void
-};
-
-const formDefaultValues = {
-  nomeDoServico: '',
-  login: '',
-  senha: '',
-  URL: '',
+  handleClearForm: () => void,
+  estadoInicial: FormDefaultValuesType,
+  handleChange: (event:TargetType) => void,
+  sendFormFunction: (event: React.FormEvent<HTMLFormElement>) => void,
 };
 
 function Form(props:FormProps) {
   const {
     handleClearForm,
+    estadoInicial,
+    handleChange,
+    sendFormFunction,
   } = props;
   const [btnState, setbtnState] = useState(true);
-  const [estadoInicial, setEstadoInicial] = useState(formDefaultValues);
-  const { nomeDoServico, login, senha, URL } = estadoInicial;
+  const { nomeDoServico, login, senha, url } = estadoInicial;
   const validPass = 'valid-password-check';
   const invalidPass = 'invalid-password-check';
-  function handleChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
-  ) {
-    const { name, value } = event.target;
-    setEstadoInicial({
-      ...estadoInicial,
-      [name]: value,
-    });
-  }
+
   function passwordStatus() {
     const specialChars = /\W|_/;
     if (nomeDoServico.length > 0
         && login.length > 0
-        && senha.length > 8 && senha.length < 16
+        && senha.length >= 8 && senha.length <= 16
         && /\d/.test(senha)
         && specialChars.test(senha)
         && senha.match(/[a-zA-Z]/)) {
@@ -42,17 +33,21 @@ function Form(props:FormProps) {
       setbtnState(true);
     }
   }
+
   return (
     <div>
-      <form onKeyUpCapture={ passwordStatus }>
+      <form
+        onSubmit={ (event) => sendFormFunction(event) }
+        onKeyUpCapture={ passwordStatus }
+      >
         <label>
           Nome do serviço
           <input
-            type="text"
             name="nomeDoServico"
-            onChange={ handleChange }
-            value={ nomeDoServico }
             required
+            type="text"
+            value={ nomeDoServico }
+            onChange={ handleChange }
           />
         </label>
         <label>
@@ -78,16 +73,16 @@ function Form(props:FormProps) {
           URL
           <input
             type="text"
-            name="URL"
+            name="url"
             onChange={ handleChange }
-            value={ URL }
+            value={ url }
           />
         </label>
-        <button disabled={ btnState }>Cadastrar</button>
+        <button type="submit" disabled={ btnState }>Cadastrar</button>
         <button onClick={ handleClearForm }>Cancelar</button>
       </form>
       <p
-        className={ senha.length >= 8 && senha.length <= 16
+        className={ senha.length >= 8
           ? validPass : invalidPass }
       >
         Possuir 8 ou mais caracteres

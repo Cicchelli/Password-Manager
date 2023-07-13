@@ -1,9 +1,8 @@
 import './App.css';
 import { useState } from 'react';
-import { v4 as uuid } from 'uuid';
 import Form from './components/Form';
 import Titulo from './components/Titulo';
-import { TargetType, FormDefaultValuesType, FormDefaultValuesTypewithid }
+import { TargetType, FormDefaultValuesType }
   from './components/Types';
 
 const formDefaultValues = {
@@ -15,8 +14,8 @@ const formDefaultValues = {
 function App() {
   const [renderForm, setRenderForm] = useState(false);
   const [estadoInicial, setEstadoInicial] = useState(formDefaultValues);
-  const [formSend, setFormSend] = useState<FormDefaultValuesTypewithid[]>([]);
-  const [initialDisplay, setinitialDisplay] = useState(true);
+  const [formSend, setFormSend] = useState<FormDefaultValuesType[]>([]);
+  // const [initialDisplay, setinitialDisplay] = useState(true);
   function handleRenderForm() {
     setRenderForm(true);
   }
@@ -35,9 +34,9 @@ function App() {
   function sendFormFunction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormSend(
-      [...formSend, { ...estadoInicial, id: uuid() }],
+      [...formSend, { ...estadoInicial }],
     );
-    setinitialDisplay(false);
+    // setinitialDisplay(false);
     setEstadoInicial(formDefaultValues);
     setRenderForm(false);
   }

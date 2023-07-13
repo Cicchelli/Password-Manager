@@ -1,3 +1,5 @@
+import { type } from "@testing-library/user-event/dist/type";
+
 export type TargetType = React
   .ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
 export type FormDefaultValuesType = {
@@ -6,3 +8,4 @@ export type FormDefaultValuesType = {
   senha: string,
   url: string,
 };
+export type FormDefaultValuesTypewithid = FormDefaultValuesType &{id:string}

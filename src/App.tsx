@@ -16,6 +16,10 @@ function App() {
   const [estadoInicial, setEstadoInicial] = useState(formDefaultValues);
   const [formSend, setFormSend] = useState<FormDefaultValuesType[]>([]);
   // const [initialDisplay, setinitialDisplay] = useState(true);
+  const [hidePass, setHidePass] = useState(false);
+  function handleHidePass() {
+    setHidePass(!hidePass);
+  }
   function handleRenderForm() {
     setRenderForm(true);
   }
@@ -61,13 +65,22 @@ function App() {
       {
         formSend.length === 0 && (<p>Nenhuma senha cadastrada</p>)
       }
+      <label htmlFor="esconder">
+        Esconder senhas
+        <input
+          checked={ hidePass }
+          id="esconder"
+          type="checkbox"
+          onChange={ handleHidePass }
+        />
+      </label>
       {
         formSend.length > 0 && (
           formSend.map(({ nomeDoServico, login, senha, url }) => (
             <div key={ nomeDoServico }>
               <a href={ url }>{ nomeDoServico }</a>
               <p>{ login }</p>
-              <p>{ senha }</p>
+              <p>{ hidePass ? senha : '******'}</p>
               <button
                 onClick={ () => erase(login) }
                 data-testid="remove-btn"
@@ -76,6 +89,7 @@ function App() {
                 Apagar
 
               </button>
+
             </div>
           ))
         )
